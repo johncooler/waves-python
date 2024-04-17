@@ -310,6 +310,12 @@ class Node:
         response_json = self.get(f'{self.uri}/transactions/unconfirmed/size')
         return response_json.get('size')
 
+    def send_transaction_broadcast(self, payload):
+        response_json = self.post(f'{self.uri}/transactions/broadcast', payload)
+        if not isinstance(response_json, list) and response_json.get('error'):
+            return NodeException.from_dict(response_json)
+        return TransactionInfo.from_dict(response_json)
+
     # ===============
     #     UTILS
     # ===============

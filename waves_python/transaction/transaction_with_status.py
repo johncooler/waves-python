@@ -10,3 +10,4 @@ from waves_python.transaction.transaction import Transaction
 @dataclass
 class TransactionWithStatus(Transaction):
     application_status: ApplicationStatus = ApplicationStatus.SUCCEEDED
+    confirmations: int = 0
