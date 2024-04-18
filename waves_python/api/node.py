@@ -52,7 +52,10 @@ class Node:
         return [Address(address_str) for address_str in response_json]
 
     def get_address_balance(self, address: Address, confirmations: int = 0) -> int:
-        response_json = self.get(f'{self.uri}/addresses/balance/{address.base58_str}{'' if confirmations == 0 else '/%d' % confirmations}')
+        if confirmations == 0:
+            response_json = self.get(f'{self.uri}/addresses/balance/{address.base58_str}')
+        else:
+            response_json = self.get(f'{self.uri}/addresses/balance/{address.base58_str}/{confirmations}')
         return response_json.get('balance')
  
     def get_addresses_balances(self, addresses: List[Address], height: int) -> List[int]:
