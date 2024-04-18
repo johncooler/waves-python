@@ -153,6 +153,13 @@ class Node:
         if not isinstance(response_json, list) and response_json.get('error'):
             return NodeException.from_dict(response_json)
         return [AssetDetails.from_dict(resp) for resp in response_json]
+    
+    def send_broadcast_transfer(self, payload):
+        response = self.post(f'{self.uri}/assets/broadcast/transfer', payload)
+        if isinstance(response, dict):
+            return response
+        else:
+            return response[0]
 
     # ===============
     #    BLOCKCHAIN
